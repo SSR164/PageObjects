@@ -88,7 +88,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setState(String state) {
-        setState.click();
+        setState.scrollTo().click();
         setState.$(byText(state)).click();
 
         return this;
@@ -96,19 +96,19 @@ public class RegistrationPage {
 
     public RegistrationPage setCity(String city) {
         setCity.click();
-        setCity.$(byText(city)).click();
+        setCity.$(byText(city)).scrollTo().click();
 
         return this;
     }
 
 
     public RegistrationPage submit() {
-        submit.scrollTo().click();
+        submit.scrollTo().scrollTo().click();
         return this;
     }
 
     public RegistrationPage setDateOfBirthday(String day, String month, String year) {
-        setCalendar.click();
+        setCalendar.scrollTo().click();
         calendarComponent.setDate(day, month, year);
         return this;
     }
