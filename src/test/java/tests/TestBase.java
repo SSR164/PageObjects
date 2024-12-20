@@ -17,15 +17,19 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        // Настройки конфигурации браузера из параметров Jenkins
-        Configuration.browser = System.getProperty("browserName", "chrome"); // Браузер (например, chrome)
-        Configuration.browserVersion = System.getProperty("browserVersion", "126"); // Версия браузера
-        Configuration.browserSize = System.getProperty("browserSize", "1920x1080"); // Разрешение экрана
-        Configuration.remote = System.getProperty("remoteUrl"); // URL удалённого браузера с логином и паролем
-        // Другие настройки
-        Configuration.pageLoadStrategy = "normal";
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.timeout = 6000;
+        Configuration.baseUrl = "https://demoqa.com/";
+        Configuration.pageLoadStrategy = "eager";
+        //Configuration.holdBrowserOpen = true;
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("browserVersion");
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
+        Configuration.remote = System.getProperty("remoteUrl");
+        //String login = System.getProperty("login", "defaultUser");  // Логин по умолчанию
+        //String password = System.getProperty("password", "defaultPassword");  // Пароль по умолчанию
+
+        //Configuration.browserSize = "1920x1080";
+        //Configuration.timeout = 5000; // default 4000
+        //Configuration.remote="https://user1:1234@selenoid.autotests.cloud/wd/hub";
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
