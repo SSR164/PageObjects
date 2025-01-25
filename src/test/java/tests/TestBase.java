@@ -2,17 +2,16 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import config.WebDriverConfig;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pages.RegistrationPage;
-import config.WebDriverConfig;
-import org.aeonbits.owner.ConfigFactory;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -55,7 +54,7 @@ public class TestBase {
         Configuration.browserVersion = config.getBrowserVersion();
         Configuration.browserSize = config.getbrowserSize();
 
-        if (config.getIsRemote()){
+        if (config.getIsRemote()) {
             Configuration.remote = config.getRemoteUrl();
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -64,17 +63,17 @@ public class TestBase {
             ));
             Configuration.browserCapabilities = capabilities;
 
-            // Логирование для Allure
-            SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        }
-        }
 
+
+        }
+    }
 
 
     @BeforeEach
     public void preparation() {
         registrationPage = new RegistrationPage();
         registrationPage.openPage().removeBanners();
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());  // Логирование для Allure
     }
 
     @AfterEach

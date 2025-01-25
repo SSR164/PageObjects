@@ -6,6 +6,9 @@ plugins {
 repositories {
     mavenCentral()
 }
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
 
 def allureVersion = "2.21.0"
 
@@ -24,7 +27,7 @@ allure {
 }
 
 dependencies {
-    testImplementation 'com.codeborne:selenide:6.19.1'
+    testImplementation 'com.codeborne:selenide:7.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.2'
     testImplementation 'org.slf4j:slf4j-simple:2.0.16'
     testImplementation 'org.aeonbits.owner:owner:1.0.4'
@@ -50,11 +53,11 @@ task jenkins_test(type: Test) {
         excludeTags("other")
     }
 }
-
-// Добавляем настройку для JDK 11
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+task simpleTests(type: Test) {
+    useJUnitPlatform {
+        includeTags("simple") // Включаем только тесты с тегом "simple"
+    }
 }
-//gradle clean jenkins_test -Denv=local
-//gradle clean jenkins_test -Denv=remote
+
+//gradle clean simpleTests -Denv=local
+//gradle clean simpleTests -Denv=remote
