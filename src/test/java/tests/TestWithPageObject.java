@@ -1,10 +1,13 @@
 package tests;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import utils.RandomUtils;
 import java.io.File;
+
+import static io.qameta.allure.Allure.step;
 
 public class TestWithPageObject extends TestBase {
     RegistrationPage registrationPage =
@@ -28,9 +31,10 @@ public class TestWithPageObject extends TestBase {
 
 
     @Test
-    @Step("Ввод данных в форму регистрации")
+    @DisplayName("Заполнение и проверка всех атрибутов, формы регистрации ")
     @Tag("simple")
     void successfulRegistrationTest() {
+        step("Заполнение всех атрибутов, формы регистрации", () -> {
         registrationPage
                 .setFirstName(firstName)
                 .setLastName(lastName)
@@ -45,11 +49,9 @@ public class TestWithPageObject extends TestBase {
                 .setState(state)
                 .setCity(city)
                 .submit();
-
-        // Проверяем, что модальное окно появилось
+        });
+        step("Проверяем значения, используя ResultsTableComponent", () -> {
         registrationPage.getResultsTableComponent().checkModalAppears();
-
-        //Проверяем значения, используя ResultsTableComponent
         registrationPage.getResultsTableComponent().checkResult("Student Name", firstName + " " + lastName);
         registrationPage.getResultsTableComponent().checkResult("Student Email", emailAddress);
         registrationPage.getResultsTableComponent().checkResult("Gender", gender);
@@ -60,7 +62,7 @@ public class TestWithPageObject extends TestBase {
         registrationPage.getResultsTableComponent().checkResult("Picture", new File(picture).getName());
         registrationPage.getResultsTableComponent().checkResult("Address", adress);
         registrationPage.getResultsTableComponent().checkResult("State and City", state + " " + city);
-    }
+    });}
 
     @Test
     @Tag("other")
